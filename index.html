@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Aanya 🌻</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===================== LOADING SCREEN ===================== -->
+  <div id="loading-screen">
+    <div class="loader-sunflower">🌻</div>
+    <p>Preparing something special...</p>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+  </div>
+
+  <!-- ===================== CUSTOM CURSOR ===================== -->
+  <div class="custom-cursor" id="custom-cursor"></div>
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <!-- ===================== LANDING SCREEN ===================== -->
+  <section id="landing-screen">
+    <div class="sky-bg">
+      <div class="clouds"></div>
+      <div class="sunflower-field" id="sunflower-field"></div>
+      <div class="sparkles" id="landing-sparkles"></div>
+    </div>
+    <button id="open-btn" class="glow-btn">
+      <span>Happy Birthday Aanya! 🌻</span>
+      <span class="ripple"></span>
+    </button>
+  </section>
+
+  <!-- ===================== MAIN SITE ===================== -->
+  <main id="main-site" class="hidden">
+
+    <!-- music toggle -->
+    <button id="music-toggle" title="Toggle music">🎵</button>
+    <audio id="bg-music" loop src="assets/music/birthday-song.mp3"></audio>
+
+    <!-- floating petals + particles container -->
+    <div id="petal-container"></div>
+    <div id="particle-container"></div>
+    <div id="chat-bubble-container"></div>
+
+    <!-- HERO -->
+    <section class="section hero-section" data-parallax>
+      <h1 class="handwritten-title">For My Favourite Girl,<br>Aanya 🌻</h1>
+      <p class="subtitle fade-in-scroll">A little universe made just for you</p>
+      <div class="scroll-hint">scroll down ↓</div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="section gallery-section fade-in-scroll">
+      <h2 class="section-title">Our Memories 📸</h2>
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- polaroids injected by JS -->
+      </div>
+    </section>
+
+    <!-- LETTER -->
+    <section class="section letter-section fade-in-scroll">
+      <h2 class="section-title">A Little Letter For You 💌</h2>
+      <div class="envelope-wrapper">
+        <div class="envelope" id="envelope">
+          <div class="envelope-flap"></div>
+          <div class="envelope-body"></div>
+          <div class="envelope-heart">💛</div>
+        </div>
+        <p class="envelope-hint" id="envelope-hint">tap the envelope to open</p>
+      </div>
+
+      <div class="letter-paper hidden" id="letter-paper">
+        <p id="typewriter-text"></p>
+        <div class="secret-sunflower-wrapper">
+          <span id="secret-sunflower" title="🌻">🌻</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="section footer-section fade-in-scroll">
+      <p class="handwritten-title small">Keep shining, birthday girl 🌼</p>
+      <p class="footer-note">made with love, for Aanya</p>
+    </footer>
+
+  </main>
+
+  <!-- confetti canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
