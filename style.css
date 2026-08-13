@@ -1,0 +1,302 @@
+/* ==========================================================
+   BIRTHDAY WEBSITE FOR AANYA — STYLESHEET
+   Beginner tip: colors are defined once below as CSS
+   variables, so you can change the whole palette from here.
+   ========================================================== */
+
+:root{
+  --sunflower: #F7C948;
+  --cream: #FFF9F0;
+  --pink: #FFDDE4;
+  --sky: #DFF4FF;
+  --beige: #F5E6D3;
+  --brown: #5B4636;
+  --shadow-soft: 0 8px 30px rgba(91,70,54,0.15);
+  --glass-bg: rgba(255,255,255,0.35);
+  --glass-border: rgba(255,255,255,0.5);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family: 'Georgia', 'Segoe UI', serif;
+  background: var(--cream);
+  color: var(--brown);
+  overflow-x:hidden;
+  cursor:none; /* custom cursor replaces default */
+}
+
+@media (max-width:768px){
+  body{ cursor:auto; }
+  .custom-cursor, .cursor-glow{ display:none; }
+}
+
+.hidden{ display:none !important; }
+
+/* ===================== LOADING SCREEN ===================== */
+#loading-screen{
+  position:fixed; inset:0; z-index:9999;
+  background: linear-gradient(135deg, var(--sunflower), var(--pink));
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.loader-sunflower{
+  font-size:4rem;
+  animation: spin-slow 2s linear infinite;
+}
+@keyframes spin-slow{ to{ transform:rotate(360deg); } }
+#loading-screen p{ margin-top:1rem; color:var(--brown); font-weight:bold; }
+.progress-bar-container{
+  width:220px; height:8px; background:rgba(255,255,255,0.5);
+  border-radius:10px; margin-top:1rem; overflow:hidden;
+}
+.progress-bar{
+  height:100%; width:0%; background:var(--brown); transition:width 0.2s ease;
+}
+
+/* ===================== CUSTOM CURSOR ===================== */
+.custom-cursor{
+  position:fixed; width:10px; height:10px; border-radius:50%;
+  background:var(--brown); pointer-events:none; z-index:9998;
+  transform:translate(-50%,-50%); transition:transform 0.1s ease;
+}
+.cursor-glow{
+  position:fixed; width:30px; height:30px; border-radius:50%;
+  background:radial-gradient(circle, rgba(247,201,72,0.6), transparent 70%);
+  pointer-events:none; z-index:9997; transform:translate(-50%,-50%);
+  transition: left 0.12s ease-out, top 0.12s ease-out;
+}
+
+/* ===================== LANDING SCREEN ===================== */
+#landing-screen{
+  position:fixed; inset:0; z-index:100;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+.sky-bg{
+  position:absolute; inset:0;
+  background: linear-gradient(to bottom, var(--sky) 0%, var(--cream) 55%, var(--sunflower) 100%);
+}
+.clouds{
+  position:absolute; inset:0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.8) 0, transparent 8%),
+    radial-gradient(circle at 60% 15%, rgba(255,255,255,0.7) 0, transparent 10%),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.6) 0, transparent 7%);
+  animation: drift 40s linear infinite;
+}
+@keyframes drift{ from{ background-position:0 0; } to{ background-position:200px 0; } }
+
+.sunflower-field{
+  position:absolute; bottom:0; left:0; width:100%; height:35%;
+  background-repeat:repeat-x; background-size:80px;
+}
+.sunflower-field::before{
+  content:'';
+  position:absolute; inset:0;
+  background-image: radial-gradient(circle, var(--sunflower) 10%, transparent 11%);
+  background-size:60px 60px;
+  animation: sway 4s ease-in-out infinite alternate;
+}
+@keyframes sway{ from{ transform:translateX(0) rotate(0deg);} to{ transform:translateX(10px) rotate(2deg);} }
+
+.sparkles{
+  position:absolute; inset:0; pointer-events:none;
+}
+.sparkle{
+  position:absolute; width:4px; height:4px; background:white; border-radius:50%;
+  opacity:0; animation: twinkle 2.5s ease-in-out infinite;
+}
+@keyframes twinkle{ 0%,100%{opacity:0;} 50%{opacity:1;} }
+
+.glow-btn{
+  position:relative; z-index:5;
+  padding:1.5rem 2.5rem;
+  font-size:1.3rem;
+  font-family:'Georgia', serif;
+  font-weight:bold;
+  color:var(--brown);
+  background: var(--cream);
+  border:3px solid var(--sunflower);
+  border-radius:50px;
+  cursor:pointer;
+  box-shadow: 0 0 20px rgba(247,201,72,0.6), var(--shadow-soft);
+  animation: pulse-glow 2.5s ease-in-out infinite;
+  transition: transform 0.3s ease;
+  overflow:hidden;
+}
+.glow-btn:hover{ transform:scale(1.08); }
+@keyframes pulse-glow{
+  0%,100%{ box-shadow:0 0 20px rgba(247,201,72,0.6), var(--shadow-soft); }
+  50%{ box-shadow:0 0 40px rgba(247,201,72,0.9), var(--shadow-soft); }
+}
+.ripple{
+  position:absolute; border-radius:50%; background:rgba(247,201,72,0.5);
+  transform:scale(0); pointer-events:none;
+  animation:none;
+}
+.ripple.active{ animation: ripple-anim 0.6s ease-out; }
+@keyframes ripple-anim{ to{ transform:scale(4); opacity:0; } }
+
+/* ===================== MAIN SITE ===================== */
+#main-site{
+  position:relative; z-index:1;
+  transition: opacity 1s ease;
+}
+
+.section{
+  min-height:100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:4rem 1.5rem;
+  position:relative;
+}
+
+.hero-section{ background: linear-gradient(180deg, var(--sky), var(--cream)); }
+.handwritten-title{
+  font-family:'Brush Script MT', cursive, 'Georgia', serif;
+  font-size:3rem; color:var(--brown); line-height:1.3;
+}
+.handwritten-title.small{ font-size:2rem; }
+.subtitle{ margin-top:1rem; font-size:1.2rem; color:var(--brown); opacity:0.8; }
+.scroll-hint{ position:absolute; bottom:2rem; opacity:0.6; animation:bounce 2s infinite; }
+@keyframes bounce{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(10px);} }
+
+.section-title{
+  font-size:2.2rem; margin-bottom:2.5rem; color:var(--brown);
+  font-family:'Georgia', serif;
+}
+
+/* fade in on scroll (JS toggles .visible) */
+.fade-in-scroll{ opacity:0; transform:translateY(40px); transition:opacity 0.9s ease, transform 0.9s ease; }
+.fade-in-scroll.visible{ opacity:1; transform:translateY(0); }
+
+/* GALLERY */
+.gallery-section{ background: var(--beige); }
+.gallery-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap:2rem; max-width:1100px; width:100%;
+}
+.polaroid{
+  background:white; padding:1rem 1rem 2.5rem 1rem;
+  box-shadow:var(--shadow-soft); border-radius:4px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor:pointer;
+}
+.polaroid img{ width:100%; display:block; border-radius:2px; }
+.polaroid:hover{ transform: scale(1.05) rotate(0deg) !important; box-shadow:0 15px 40px rgba(91,70,54,0.3); }
+
+/* LETTER */
+.letter-section{ background: linear-gradient(180deg, var(--pink), var(--cream)); }
+.envelope-wrapper{ display:flex; flex-direction:column; align-items:center; gap:1rem; }
+.envelope{
+  width:220px; height:150px; position:relative; cursor:pointer;
+  animation: float-env 3.5s ease-in-out infinite;
+}
+@keyframes float-env{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-12px);} }
+.envelope-body{
+  position:absolute; inset:0; background:var(--sunflower);
+  border-radius:8px; box-shadow:var(--shadow-soft);
+}
+.envelope-flap{
+  position:absolute; top:0; left:0; width:100%; height:0;
+  border-left:110px solid transparent; border-right:110px solid transparent;
+  border-top:80px solid #e0ac2f;
+  transform-origin: top; transition: transform 0.6s ease;
+  z-index:2;
+}
+.envelope.open .envelope-flap{ transform: rotateX(180deg); }
+.envelope-heart{
+  position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+  font-size:1.5rem; z-index:1;
+}
+.envelope-hint{ opacity:0.7; font-size:0.95rem; }
+
+.letter-paper{
+  margin-top:2.5rem; max-width:700px; width:100%;
+  background: repeating-linear-gradient(var(--cream), var(--cream) 32px, #f0e3cf 33px);
+  padding:2.5rem; border-radius:6px; box-shadow:var(--shadow-soft);
+  text-align:left; font-family:'Brush Script MT', cursive, 'Georgia', serif;
+  font-size:1.3rem; line-height:1.8; white-space:pre-wrap;
+}
+
+.secret-sunflower-wrapper{ text-align:center; margin-top:2rem; }
+#secret-sunflower{
+  font-size:1.5rem; cursor:pointer; opacity:0.55; user-select:none;
+  transition: transform 0.2s ease;
+}
+#secret-sunflower:hover{ transform:scale(1.3) rotate(15deg); }
+
+/* FOOTER */
+.footer-section{ background:var(--brown); color:var(--cream); min-height:40vh; }
+.footer-section .handwritten-title{ color:var(--cream); }
+.footer-note{ margin-top:1rem; opacity:0.7; font-size:0.9rem; }
+
+/* ===================== FLOATING ELEMENTS ===================== */
+#petal-container, #particle-container, #chat-bubble-container{
+  position:fixed; inset:0; pointer-events:none; z-index:3; overflow:hidden;
+}
+.petal{
+  position:absolute; top:-40px; font-size:1.5rem;
+  animation-name: fall; animation-timing-function: linear; animation-iteration-count:infinite;
+}
+@keyframes fall{
+  0%{ transform:translateY(0) rotate(0deg); }
+  100%{ transform:translateY(110vh) rotate(360deg); }
+}
+.particle{
+  position:absolute; width:6px; height:6px; border-radius:50%;
+  background:radial-gradient(circle, var(--sunflower), transparent);
+  animation: rise 6s ease-in infinite;
+}
+@keyframes rise{
+  0%{ transform:translateY(0); opacity:0; }
+  20%{ opacity:1; }
+  100%{ transform:translateY(-100vh); opacity:0; }
+}
+
+.chat-bubble{
+  position:absolute; pointer-events:auto;
+  background:var(--glass-bg); backdrop-filter:blur(8px);
+  border:1px solid var(--glass-border); border-radius:20px;
+  padding:0.7rem 1.1rem; font-size:0.9rem; color:var(--brown);
+  box-shadow:var(--shadow-soft);
+  animation: bubble-float 8s ease-in-out infinite;
+  opacity:0;
+}
+@keyframes bubble-float{
+  0%{ opacity:0; transform:translateY(0) translateX(0); }
+  10%{ opacity:1; }
+  50%{ transform:translateY(-20px) translateX(10px); }
+  90%{ opacity:1; }
+  100%{ opacity:0; transform:translateY(-40px) translateX(-10px); }
+}
+
+/* MUSIC TOGGLE */
+#music-toggle{
+  position:fixed; top:1.2rem; right:1.2rem; z-index:50;
+  width:50px; height:50px; border-radius:50%;
+  border:none; background:var(--glass-bg); backdrop-filter:blur(8px);
+  border:1px solid var(--glass-border);
+  font-size:1.3rem; cursor:pointer; box-shadow:var(--shadow-soft);
+  transition: transform 0.3s ease;
+}
+#music-toggle:hover{ transform:scale(1.1) rotate(15deg); }
+#music-toggle.playing{ animation: spin-slow 4s linear infinite; }
+
+/* CONFETTI */
+#confetti-canvas{
+  position:fixed; inset:0; pointer-events:none; z-index:9000;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width:768px){
+  .handwritten-title{ font-size:2rem; }
+  .section-title{ font-size:1.6rem; }
+  .glow-btn{ font-size:1.05rem; padding:1.2rem 1.6rem; }
+  .letter-paper{ font-size:1.05rem; padding:1.5rem; }
+  .gallery-grid{ grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); }
+}
